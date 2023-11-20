@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Welcome from '../Screens/Welcome';
 import SignIn from '../Screens/SignIn';
+import DetalheProduto from '../Screens/DetalheProduto';
 
 const Stack = createNativeStackNavigator();
 
@@ -9,6 +10,20 @@ const Routes = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
+            <Stack.Screen
+                name='DetalheProduto'
+                component={DetalheProduto}
+                options={{
+                    title: '',
+                    headerStyle: {
+                        backgroundColor: '#38A69D',
+                    },
+                    headerTintColor: '#fff',
+                    headerBackTitleVisible: false,
+                    headerShadowVisible: false,
+
+                }}
+            />
                 <Stack.Screen
                     name='Welcome'
                     component={Welcome}

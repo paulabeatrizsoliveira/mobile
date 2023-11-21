@@ -1,51 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import api from '../../Services/api';
+import axios from 'axios'
+
 
 const DetalheProduto = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState('');
 
   // Estado local para a descrição original do produto
-  const [productDescription, setProductDescription] = useState(
-    `Magic Keyboard para escrever com toda a comodidade e precisão\n
-    Sem fios e recarregável, a bateria integrada de longa duração mantém o seu teclado a funcionar durante cerca de um mês, ou até mais.\n
-    Associa-se automaticamente ao Mac, para começar logo a trabalhar\n`
-  );
+  // const [productDescription, setProductDescription] = useState(
+  //   `Magic Keyboard para escrever com toda a comodidade e precisão\n
+  //   Sem fios e recarregável, a bateria integrada de longa duração mantém o seu teclado a funcionar durante cerca de um mês, ou até mais.\n
+  //   Associa-se automaticamente ao Mac, para começar logo a trabalhar\n`
+  // );
 
   // Exemplo de detalhes do produto (substitua com seus próprios dados)
-  const product = {
-    image: require('../../../assets/teclado.jpg'),
-    titulo: 'Magic Keyboard',
-    preco: 50.0,
-  };
+  // const product = {
+  //   image: require('../../../assets/teclado.jpg'),
+  //   titulo: 'Magic Keyboard',
+  //   preco: 50.0,
+  // };
+
+  
+  const [produto, setProduto] = useState ([])
+  useEffect(() => {
+    api.get('/produto/1')
+    .then((response) => {
+      setProduto(response.data);
+      setEditedDescription(response.data.descricao);
+      console.log(response.data);
+      
+    }).catch(() => {
+      console.log('Deu errado!');
+    })
+    
+  },[]);
 
   const handleEditDescription = () => {
     setIsEditing(true);
-    setEditedDescription(productDescription); // Inicializa a descrição editada com a descrição atual
+    setEditedDescription(produto.descricao); // Inicializa a descrição editada com a descrição atual
   };
 
   const handleSaveDescription = () => {
     // Atualiza o estado local com a descrição editada
-    setProductDescription(editedDescription);
-    
-    // Simula a persistência dos dados (substitua com a lógica real de salvar no back-end)
-    // Aqui você pode chamar uma API, dispatch para um estado global, ou usar AsyncStorage, por exemplo.
-    // Por simplicidade, apenas logaremos a descrição editada no console.
-    console.log('Descrição editada:', editedDescription);
+    setProduto({...produto, descricao:editedDescription});   
+      console.log('Descrição editada:', editedDescription);
 
     // Volta ao modo de visualização após salvar
     setIsEditing(false);
   };
-
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-        <Image source={product.image} style={[styles.productImage, { maxHeight: 80 }]} />
+        <Image source={produto.imagem} style={[styles.productImage, { maxHeight: 80 }]} />
 
         <View style={styles.productDetails}>
-          <Text style={styles.productTitulo}>{product.titulo}</Text>
-          <Text style={styles.productPreco}>R$ {product.preco.toFixed(2)}</Text>
+          <Text style={styles.productTitulo}>{produto.nome}</Text>
+          <Text style={styles.productPreco}>R$ {produto.valor?.toFixed(2)}</Text>
 
           {isEditing ? (
             <TextInput
@@ -55,7 +68,7 @@ const DetalheProduto = () => {
               multiline
             />
           ) : (
-            <Text style={styles.productDescricao}>{productDescription}</Text>
+            <Text style={styles.productDescricao}>{produto.descricao}</Text>
           )}
 
           <View style={styles.editButtonContainer}>

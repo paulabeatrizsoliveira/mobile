@@ -1,36 +1,48 @@
-import React from 'react'
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import React, { useContext, useState } from 'react';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import { AuthContext } from '../../context/AuthContext';
 
-import * as Animatable from 'react-native-animatable'
 // import React, { Component } from 'react'
 
 export default function SignIn() {
-    return(
+
+    const { login } = useContext(AuthContext);
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+
+    return (
         <View style={styles.container}>
             <Animatable.View animation="fadeInLeft" delay={800} style={styles.containerHeader}>
                 <Text style={styles.message}>Bem vindo!</Text>
             </Animatable.View >
 
             <Animatable.View animation="fadeInUp" style={styles.containerForm}>
-             <Text style={styles.title}>Email</Text>
-             <TextInput
-               placeholder="Digite um email"
-               style={styles.input}
-             />
+                <Text style={styles.title}>Email</Text>
+                <TextInput
+                    placeholder="Digite um email"
+                    style={styles.input}
+                    onChangeText={setEmail}
+                    keyboardType='email-adress'
+                    value={email}
+                />
 
-            <Text style={styles.title}>Senha</Text>
-             <TextInput
-               placeholder="Sua senha"
-               style={styles.input}
-             />
+                <Text style={styles.title}>Senha</Text>
+                <TextInput
+                    placeholder="Sua senha"
+                    style={styles.input}
+                    onChangeText={setSenha}
+                    value={senha}
+                    secureTextEntry={true}
+                />
 
-             <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Acessar</Text>
-             </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => login(email, senha)}>
+                    <Text style={styles.buttonText}>Acessar</Text>
+                </TouchableOpacity>
 
-             <TouchableOpacity style={styles.buttonRegister}>
-                <Text style={styles.registerText}>Não possui conta? Cadastre-se</Text>
-             </TouchableOpacity>
+                <TouchableOpacity style={styles.buttonRegister}>
+                    <Text style={styles.registerText}>Não possui conta? Cadastre-se</Text>
+                </TouchableOpacity>
 
             </Animatable.View>
         </View>
@@ -40,7 +52,7 @@ export default function SignIn() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#38A69D',        
+        backgroundColor: '#38A69D',
     },
     containerHeader: {
         marginTop: '14%',

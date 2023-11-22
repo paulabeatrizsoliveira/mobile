@@ -1,10 +1,13 @@
-import React from 'react';
+import AuthProvider from './src/context/AuthContext';
 import Routes from './src/routes';
 
 
-
-export default function App() {
-  return <Routes/>
+export default function App({ children }) {
+  return (
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
+  )
 }
 
-{/* tag 3.3.0 */}
+{/* tag 4.0.0 */ }

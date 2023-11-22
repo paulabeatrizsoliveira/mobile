@@ -2,26 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import api from '../../Services/api';
-import axios from 'axios'
+// import styles from './style';
 
 
 const DetalheProduto = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState('');
-
-  // Estado local para a descrição original do produto
-  // const [productDescription, setProductDescription] = useState(
-  //   `Magic Keyboard para escrever com toda a comodidade e precisão\n
-  //   Sem fios e recarregável, a bateria integrada de longa duração mantém o seu teclado a funcionar durante cerca de um mês, ou até mais.\n
-  //   Associa-se automaticamente ao Mac, para começar logo a trabalhar\n`
-  // );
-
-  // Exemplo de detalhes do produto (substitua com seus próprios dados)
-  // const product = {
-  //   image: require('../../../assets/teclado.jpg'),
-  //   titulo: 'Magic Keyboard',
-  //   preco: 50.0,
-  // };
+  const [editedImagem, setEditedImagem] = useState('');
+  const [editedNome, setEditedNome] = useState('');
+  const [editedValor, setEditedValor] = useState(0);
+  const [editedEstoque, setEditedEstoque] = useState(0);
+  const [editedAtivo, setEditedAtivo] = useState(false);
 
   
   const [produto, setProduto] = useState ([])
@@ -41,15 +32,32 @@ const DetalheProduto = () => {
   const handleEditDescription = () => {
     setIsEditing(true);
     setEditedDescription(produto.descricao); // Inicializa a descrição editada com a descrição atual
+    setEditedImagem(produto.imagem);
+    setEditedNome(produto.nome);
+    setEditedValor(produto.valor);
+    setEditedEstoque(produto.estoque);
+    setEditedAtivo(produto.ativo);
   };
 
-  const handleSaveDescription = () => {
+  const handleSave = async () => {
     // Atualiza o estado local com a descrição editada
-    setProduto({...produto, descricao:editedDescription});   
-      console.log('Descrição editada:', editedDescription);
+      try{
+        const atualizarProduto = {
+          ...produto, 
+          imagem: editedImagem,
+          nome: editedNome,
+          valor: editedValor,
+          estoque: editedEstoque,
+          ativo: editedAtivo,
+        
+        }; // Pegando as informações do produto que está sendo editada na api.
+        await api.put(`/produto/${produto.id}/`, atualizarProduto);
+        setProduto(atualizarProduto);
+        setIsEditing(false);
 
-    // Volta ao modo de visualização após salvar
-    setIsEditing(false);
+      }catch (e) {
+        console.log("Erro ao salvar alterações!", e);
+    }
   };
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -61,19 +69,57 @@ const DetalheProduto = () => {
           <Text style={styles.productPreco}>R$ {produto.valor?.toFixed(2)}</Text>
 
           {isEditing ? (
+            <View>
+              <Text>Descrição do Produto</Text>
             <TextInput
               style={styles.editDescriptionInput}
               value={editedDescription}
               onChangeText={(text) => setEditedDescription(text)}
               multiline
             />
+            <Text>Imagem do Produto</Text>
+            <TextInput
+              style={styles.editDescriptionInput}
+              value={editedImagem}
+              onChangeText={(text) => setEditedImagem(text)}
+            />
+            <Text>Nome do Produto</Text>
+            <TextInput
+              style={styles.editDescriptionInput}
+              value={editedNome}
+              onChangeText={(text) => setEditedNome(text)}
+              
+            />
+            <Text>Valor do Produto</Text>
+            <TextInput
+              style={styles.editDescriptionInput}
+              value={editedValor}
+              onChangeText={(text) => setEditedValor(text)}
+              keyboardType='numeric'
+            />
+            <Text>Estoque de Produto</Text>
+            <TextInput
+              style={styles.editDescriptionInput}
+              value={editedEstoque}
+              onChangeText={(text) => setEditedEstoque(text)}
+              keyboardType='numeric'
+            />
+            <Text>Produto Ativo</Text>
+            <TextInput
+              style={styles.editDescriptionInput}
+              value={editedAtivo}
+              onChangeText={(text) => setEditedAtivo(text)}
+              multiline //comando para mudar para false.
+            />
+            </View>
+
           ) : (
             <Text style={styles.productDescricao}>{produto.descricao}</Text>
           )}
 
           <View style={styles.editButtonContainer}>
             {isEditing ? (
-              <TouchableOpacity style={styles.saveButton} onPress={handleSaveDescription}>
+              <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
                 <Feather name="check" size={24} color="white" />
               </TouchableOpacity>
             ) : (

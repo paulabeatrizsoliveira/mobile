@@ -6,7 +6,7 @@ import { ActivityIndicator } from 'react-native';
 // import styles from './style';
 
 
-const DetalheProduto = () => {
+const DetalheProduto = ({route}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState('');
   const [editedImagem, setEditedImagem] = useState('');
@@ -25,11 +25,13 @@ const DetalheProduto = () => {
 
   //   loadData();
   // }, []);
+
+  const {id} = route.params;
   
   const [produto, setProduto] = useState ([])
   useEffect(() => {
     setIsLoading(true);
-    api.get('/produto/1')
+    api.get(`/produto/${id}`)
     .then((response) => {
       setProduto(response.data);
       setEditedDescription(response.data.descricao);
@@ -43,7 +45,7 @@ const DetalheProduto = () => {
     )
   
     
-  },[]);
+  },[id]);
 
   const handleEditDescription = () => {
     setIsEditing(true);

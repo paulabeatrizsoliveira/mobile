@@ -6,7 +6,7 @@ import { ActivityIndicator } from 'react-native';
 // import styles from './style';
 
 
-const DetalheProduto = ({route}) => {
+const DetalheProduto = ({ route }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState('');
   const [editedImagem, setEditedImagem] = useState('');
@@ -26,26 +26,26 @@ const DetalheProduto = ({route}) => {
   //   loadData();
   // }, []);
 
-  const {id} = route.params;
-  
-  const [produto, setProduto] = useState ([])
+  const { id } = route.params;
+
+  const [produto, setProduto] = useState([])
   useEffect(() => {
     setIsLoading(true);
     api.get(`/produto/${id}`)
-    .then((response) => {
-      setProduto(response.data);
-      setEditedDescription(response.data.descricao);
-      console.log(response.data);
+      .then((response) => {
+        setProduto(response.data);
+        setEditedDescription(response.data.descricao);
+        console.log(response.data);
 
-    }).catch(() => {
-      console.log('Deu errado!');
-    }).finally(() =>  setIsLoading(false)
-      
+      }).catch(() => {
+        console.log('Deu errado!');
+      }).finally(() => setIsLoading(false)
 
-    )
-  
-    
-  },[id]);
+
+      )
+
+
+  }, [id]);
 
   const handleEditDescription = () => {
     setIsEditing(true);
@@ -58,7 +58,7 @@ const DetalheProduto = ({route}) => {
   };
 
   const handleSave = async () => {
- 
+    // Atualiza o estado local com a descrição editada
       try{
         const atualizarProduto = {
           ...produto,
@@ -74,18 +74,19 @@ const DetalheProduto = ({route}) => {
         setProduto(atualizarProduto);
         setIsEditing(false);
 
-      }catch (e) {
-        console.log("Erro ao salvar alterações!", e);
+    } catch (e) {
+      console.log("Erro ao salvar alterações!", e);
     }
   };
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      {isLoading && <ActivityIndicator animating={true} color='#38A69D'/>}
+      {isLoading && <ActivityIndicator animating={true} color='#38A69D' />}
       <View style={styles.container}>
-        <Image source={{uri: produto.imagem}} style={[styles.productImage, { maxHeight: 80 }]} />
+
 
         <View style={styles.productDetails}>
           <Text style={styles.productTitulo}>{produto.nome}</Text>
+          <Image source={{ uri: produto.imagem }} style={[styles.productImage, { maxHeight: 300 }]} />
           <Text style={styles.productPreco}>R$ {produto.valor?.toFixed(2)}</Text>
           <Text style={styles.productEstoque}>Estoque: {produto.estoque}</Text>
 
@@ -93,67 +94,68 @@ const DetalheProduto = ({route}) => {
           {isEditing ? (
             <View>
               <Text style={styles.descricaoEdicao}>Descrição do Produto:</Text>
-            <TextInput
-              style={styles.editDescriptionInput}
-              value={editedDescription}
-              onChangeText={(text) => setEditedDescription(text)}
-              multiline
-            />
-            <Text style={styles.imagemEdicao}>Imagem do Produto:</Text>
-            <TextInput
-              style={styles.editDescriptionInput}
-              value={editedImagem}
-              onChangeText={(text) => setEditedImagem(text)}
-            />
-            <Text style={styles.nomeEdicao}>Nome do Produto:</Text>
-            <TextInput
-              style={styles.editDescriptionInput}
-              value={editedNome}
-              onChangeText={(text) => setEditedNome(text)}
-              
-            />
-            <Text style={styles.valorEdicao}>Valor do Produto:</Text>
-            <TextInput
-              style={styles.editDescriptionInput}
-              value={editedValor}
-              onChangeText={(text) => {
-                const numero = parseFloat(text);
-                if(!isNaN(numero)){
-                  setEditedValor(numero);
-                }else {
-                  alert('Insira um número válido!')
-                }  
-              }}
-              keyboardType='numeric'
-            />
-            <Text style={styles.estoqueEdicao}>Estoque de Produto:</Text>
-            <TextInput
-              style={styles.editDescriptionInput}
-              value={editedEstoque}
-              onChangeText={(text) => {
-                const numero = parseFloat(text);
-                if(!isNaN(numero)){
-                  setEditedEstoque(numero);
-                }else {
-                  alert('Insira um número válido!')
-                }
-                
-              }}
-              keyboardType='numeric'
-            />
-            <Text style={styles.ativoEdicao}>Produto Ativo:</Text>
-            <TextInput
-              style={styles.editDescriptionInput}
-              value={editedAtivo}
-              onChangeText={(text) => setEditedAtivo(text)}
-              multiline //comando para mudar para false.
-            />
+              <TextInput
+                style={styles.editDescriptionInput}
+                value={editedDescription}
+                onChangeText={(text) => setEditedDescription(text)}
+                multiline
+              />
+              <Text style={styles.imagemEdicao}>Imagem do Produto:</Text>
+              <TextInput
+                style={styles.editDescriptionInput}
+                value={editedImagem}
+                onChangeText={(text) => setEditedImagem(text)}
+              />
+              <Text style={styles.nomeEdicao}>Nome do Produto:</Text>
+              <TextInput
+                style={styles.editDescriptionInput}
+                value={editedNome}
+                onChangeText={(text) => setEditedNome(text)}
+
+              />
+              <Text style={styles.valorEdicao}>Valor do Produto:</Text>
+              <TextInput
+                style={styles.editDescriptionInput}
+                value={editedValor}
+                onChangeText={(text) => {
+                  const numero = parseFloat(text);
+                  if (!isNaN(numero)) {
+                    setEditedValor(numero);
+                  } else {
+                    alert('Insira um número válido!')
+                  }
+                }}
+                keyboardType='numeric'
+              />
+              <Text style={styles.estoqueEdicao}>Estoque de Produto:</Text>
+              <TextInput
+                style={styles.editDescriptionInput}
+                value={editedEstoque}
+                onChangeText={(text) => {
+                  const numero = parseFloat(text);
+                  if (!isNaN(numero)) {
+                    setEditedEstoque(numero);
+                  } else {
+                    alert('Insira um número válido!')
+                  }
+
+                }}
+                keyboardType='numeric'
+              />
+              <Text style={styles.ativoEdicao}>Produto Ativo:</Text>
+              <TextInput
+                style={styles.editDescriptionInput}
+                value={editedAtivo}
+                onChangeText={(text) => setEditedAtivo(text)}
+                multiline //comando para mudar para false.
+              />
             </View>
 
           ) : (
             <Text style={styles.productDescricao}>{produto.descricao}</Text>
           )}
-
+        </View>
+        <View style={styles.botaoContainer}>
           <View style={styles.editButtonContainer}>
             {isEditing ? (
               <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
@@ -183,32 +185,34 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   productImage: {
-    width: 200,
-    height: 200,
-    resizeMode: 'cover',
+    width: 300,
+    height: 300,
+    resizeMode: 'contain',
     borderRadius: 8,
   },
   productDetails: {
+    flex: 0.9,
     marginTop: 16,
     alignItems: 'center',
   },
   productTitulo: {
+    marginBottom: 10,
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 8,
   },
   productPreco: {
+
     fontSize: 18,
     color: 'green',
-    marginBottom: 8,
+    marginVertical: 10,
   },
-  productEstoque:{
+  productEstoque: {
     fontSize: 14,
     color: 'black',
     marginBottom: 8,
 
   },
-
   productDescricao: {
     fontSize: 16,
     textAlign: 'center',
@@ -224,6 +228,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
   },
+  botaoContainer:{
+    flex: 0.1,
+    alignItems: 'flex-end'
+  },
   editButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -233,15 +241,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#38A69D',
     padding: 10,
     borderRadius: 20,
-    marginTop: 210,
-    marginLeft: 200,
   },
   saveButton: {
     backgroundColor: '#38A69D',
     padding: 10,
     borderRadius: 20,
   },
-  descricaoEdicao:{
+  descricaoEdicao: {
     fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
@@ -258,7 +264,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
-  nomeEdicao:{
+  nomeEdicao: {
     fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
@@ -266,7 +272,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
-  valorEdicao:{
+  valorEdicao: {
     fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
@@ -274,7 +280,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
-  estoqueEdicao:{
+  estoqueEdicao: {
     fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
@@ -282,7 +288,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
-  ativoEdicao:{
+  ativoEdicao: {
     fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',

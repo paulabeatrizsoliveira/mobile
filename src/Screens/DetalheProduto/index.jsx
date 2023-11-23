@@ -80,7 +80,7 @@ const DetalheProduto = () => {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       {isLoading && <ActivityIndicator animating={true} color='#38A69D'/>}
       <View style={styles.container}>
-        <Image source={produto.imagem} style={[styles.productImage, { maxHeight: 80 }]} />
+        <Image source={{uri: produto.imagem}} style={[styles.productImage, { maxHeight: 80 }]} />
 
         <View style={styles.productDetails}>
           <Text style={styles.productTitulo}>{produto.nome}</Text>
@@ -120,8 +120,7 @@ const DetalheProduto = () => {
                   setEditedValor(numero);
                 }else {
                   alert('Insira um número válido!')
-                }
-                
+                }  
               }}
               keyboardType='numeric'
             />
@@ -241,53 +240,53 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   descricaoEdicao:{
-    fontSize: '5',
+    fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
     marginBottom: 3,
     marginTop: 20,
-    justifyContent: 'center',
+    textAlign: 'center',
   },
   imagemEdicao: {
-    fontSize: '5',
+    fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
     justifyContent: 'center',
     marginBottom: 3,
     marginTop: 20,
-   
+    textAlign: 'center',
   },
   nomeEdicao:{
-    fontSize: '5',
+    fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
     marginBottom: 3,
     marginTop: 20,
-    justifyContent: 'center',
+    textAlign: 'center',
   },
   valorEdicao:{
-    fontSize: '5',
+    fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
     marginBottom: 3,
     marginTop: 20,
-    justifyContent: 'center',
+    textAlign: 'center',
   },
   estoqueEdicao:{
-    fontSize: '5',
+    fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
     marginBottom: 3,
     marginTop: 20,
-    justifyContent: 'center',
+    textAlign: 'center',
   },
   ativoEdicao:{
-    fontSize: '5',
+    fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',
     marginBottom: 3,
     marginTop: 20,
-    justifyContent: 'center',
+    textAlign: 'center',
   },
 
 });

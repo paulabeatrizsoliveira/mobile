@@ -49,7 +49,7 @@ const DetalheProduto = ({ route }) => {
 
   const handleEditDescription = () => {
     setIsEditing(true);
-    setEditedDescription(produto.descricao); // Inicializa a descrição editada com a descrição atual
+    setEditedDescription(produto.descricao); 
     setEditedImagem(produto.imagem);
     setEditedNome(produto.nome);
     setEditedValor(produto.valor);
@@ -59,20 +59,20 @@ const DetalheProduto = ({ route }) => {
 
   const handleSave = async () => {
     // Atualiza o estado local com a descrição editada
-    try {
-      const atualizarProduto = {
-        ...produto,
-        descricao: editedDescription,
-        imagem: editedImagem,
-        nome: editedNome,
-        valor: editedValor,
-        estoque: editedEstoque,
-        ativo: editedAtivo,
-
-      }; // Pegando as informações do produto que está sendo editada na api.
-      await api.put(`/produto/${produto.id}/`, atualizarProduto);
-      setProduto(atualizarProduto);
-      setIsEditing(false);
+      try{
+        const atualizarProduto = {
+          ...produto,
+          descricao: editedDescription,
+          imagem: editedImagem,
+          nome: editedNome,
+          valor: editedValor,
+          estoque: editedEstoque,
+          ativo: editedAtivo,
+        
+        }; // Pegando as informações do produto que está sendo editada na api.
+        await api.put(`/produto/${produto.id}/`, atualizarProduto);
+        setProduto(atualizarProduto);
+        setIsEditing(false);
 
     } catch (e) {
       console.log("Erro ao salvar alterações!", e);

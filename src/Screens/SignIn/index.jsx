@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/AuthContext';
+import styles from './styles';
 
 // import React, { Component } from 'react'
 
@@ -23,8 +24,8 @@ export default function SignIn() {
                     placeholder="Digite um email"
                     style={styles.input}
                     onChangeText={setEmail}
-                    keyboardType='email-adress'
                     value={email}
+                    keyboardType='email-address'
                 />
 
                 <Text style={styles.title}>Senha</Text>
@@ -40,68 +41,11 @@ export default function SignIn() {
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonRegister}>
+                {/* <TouchableOpacity style={styles.buttonRegister}>
                     <Text style={styles.registerText}>Não possui conta? Cadastre-se</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
             </Animatable.View>
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#38A69D',
-    },
-    containerHeader: {
-        marginTop: '14%',
-        marginBottom: '8%',
-        paddingStart: '5%'
-    },
-    message: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    containerForm: {
-        backgroundColor: '#fff',
-        flex: 1,
-        borderTopLeftRadius: 25,
-        borderTopStartRadius: 25,
-        paddingStart: '5%',
-        paddingEnd: '5%'
-    },
-    title: {
-        fontSize: 20,
-        marginTop: 28,
-    },
-    input: {
-        borderBottomWidth: 1,
-        height: 40,
-        marginBottom: 12,
-        fontSize: 16,
-    },
-    button: {
-        backgroundColor: '#38A69D',
-        width: '100%',
-        borderRadius: 4,
-        paddingVertical: 8,
-        marginTop: 14,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    buttonRegister: {
-        marginTop: 14,
-        alignSelf: 'center',
-    },
-    registerText: {
-        color: '#a1a1a1'
-    }
-
-})

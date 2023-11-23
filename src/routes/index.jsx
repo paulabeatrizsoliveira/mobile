@@ -16,21 +16,8 @@ const Routes = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-            <Stack.Screen
-                            name='DetalheProduto'
-                            component={DetalheProduto}
-                            options={{
-                                title: '',
-                                headerStyle: {
-                                    backgroundColor: '#38A69D',
-                                },
-                                headerTintColor: '#fff',
-                                headerBackTitleVisible: false,
-                                headerShadowVisible: false,
 
-                            }}
-                        />
-                {/* {user ? (
+                {user ? (
                     <>
                         <Stack.Screen
                             name='Produtos'
@@ -81,8 +68,7 @@ const Routes = () => {
                     </>
                 )
 
-                } */}
-
+                }
 
             </Stack.Navigator>
         </NavigationContainer >

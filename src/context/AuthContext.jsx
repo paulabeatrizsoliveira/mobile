@@ -22,10 +22,16 @@ const AuthProvider = ({ children }) => {
         const pessoaEncontrada = pessoas.find(pessoa => pessoa.email === email && pessoa.senha === senha);
 
         if (pessoaEncontrada) {
-            console.log('Usuário logado');
-            setUser({ user: pessoaEncontrada.nome, role: pessoaEncontrada.role });
+            if (pessoaEncontrada.ativo) {
+                console.log('Usuário logado');
+                setUser({ user: pessoaEncontrada.nome, role: pessoaEncontrada.role });
+            } else {
+                console.log('Usuário não existe');
+                alert('Usuário não existe. Entre em contato com o suporte.');
+            }
         } else {
             console.log('Credenciais inválidas');
+            alert('Credenciais inválidas. Verifique seu email e senha.')
         }
     };
 

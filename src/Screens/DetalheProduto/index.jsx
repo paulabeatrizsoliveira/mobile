@@ -49,7 +49,7 @@ const DetalheProduto = ({route}) => {
 
   const handleEditDescription = () => {
     setIsEditing(true);
-    setEditedDescription(produto.descricao); // Inicializa a descrição editada com a descrição atual
+    setEditedDescription(produto.descricao); 
     setEditedImagem(produto.imagem);
     setEditedNome(produto.nome);
     setEditedValor(produto.valor);
@@ -58,7 +58,7 @@ const DetalheProduto = ({route}) => {
   };
 
   const handleSave = async () => {
-    // Atualiza o estado local com a descrição editada
+ 
       try{
         const atualizarProduto = {
           ...produto,

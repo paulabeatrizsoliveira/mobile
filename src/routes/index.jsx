@@ -26,7 +26,6 @@ const Routes = () => {
                                 headerShown: false,
                             }}
                         />
-
                         <Stack.Screen
                             name='DetalheProduto'
                             component={DetalheProduto}
@@ -41,6 +40,7 @@ const Routes = () => {
 
                             }}
                         />
+
                     </>
                 ) : (
                     <>

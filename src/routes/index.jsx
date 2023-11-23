@@ -7,6 +7,8 @@ import DetalheProduto from '../Screens/DetalheProduto';
 import Produtos from '../Screens/Produtos';
 import { AuthContext } from '../context/AuthContext';
 
+
+
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
@@ -16,6 +18,7 @@ const Routes = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
+
 
                 <Stack.Screen
                     name='Produtos'
@@ -98,4 +101,4 @@ const Routes = () => {
     )
 }
 
-export default Routes
+export default Routes;

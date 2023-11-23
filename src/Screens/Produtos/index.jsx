@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Modal, TextInput, Alert } from "react-native";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Modal, TextInput, Alert, ActivityIndicator } from "react-native";
 import api from "../../Services/api";
 import { AuthContext } from '../../context/AuthContext';
 import { Feather } from '@expo/vector-icons';
@@ -10,14 +10,18 @@ const Produtos = ({ navigation }) => {
   const [novoProduto, setNovoProduto] = useState({});
   const { logout } = useContext(AuthContext);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     api
       .get("/produto")
       .then((response) => {
         setProdutos(response.data);
+        setIsLoading(false);
       })
       .catch((e) => {
         console.log("Erro ao buscar Produto", e);
+        setIsLoading(false);
       });
   }, []);
 
@@ -97,6 +101,7 @@ const Produtos = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {isLoading && <ActivityIndicator animating={true} color='#38A69D' />}
       <View style={styles.flatListContainer}>
         <Text style={styles.titulo}>Produtos</Text>
         <FlatList

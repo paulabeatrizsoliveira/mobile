@@ -13,7 +13,7 @@ export default function App({ children }) {
         <StatusBar style="auto" />
         <Carousel />
       </View>
-    </AuthProvider>
+    </AuthProvider>    
   )
 }
 

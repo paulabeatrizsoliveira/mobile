@@ -13,7 +13,7 @@ const DetalheProduto = ({ route }) => {
   const [editedNome, setEditedNome] = useState('');
   const [editedValor, setEditedValor] = useState(0);
   const [editedEstoque, setEditedEstoque] = useState(0);
-  const [editedAtivo, setEditedAtivo] = useState(false);
+  
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -54,7 +54,7 @@ const DetalheProduto = ({ route }) => {
     setEditedNome(produto.nome);
     setEditedValor(produto.valor);
     setEditedEstoque(produto.estoque);
-    setEditedAtivo(produto.ativo);
+    
   };
 
   const handleSave = async () => {
@@ -67,7 +67,7 @@ const DetalheProduto = ({ route }) => {
           nome: editedNome,
           valor: editedValor,
           estoque: editedEstoque,
-          ativo: editedAtivo,
+         
         
         }; // Pegando as informações do produto que está sendo editada na api.
         await api.put(`/produto/${produto.id}/`, atualizarProduto);
@@ -141,13 +141,6 @@ const DetalheProduto = ({ route }) => {
 
                 }}
                 keyboardType='numeric'
-              />
-              <Text style={styles.ativoEdicao}>Produto Ativo:</Text>
-              <TextInput
-                style={styles.editDescriptionInput}
-                value={editedAtivo}
-                onChangeText={(text) => setEditedAtivo(text)}
-                multiline //comando para mudar para false.
               />
             </View>
 
@@ -281,14 +274,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   estoqueEdicao: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    display: 'flex',
-    marginBottom: 3,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  ativoEdicao: {
     fontSize: 20,
     fontWeight: 'bold',
     display: 'flex',

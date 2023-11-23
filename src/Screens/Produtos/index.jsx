@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import api from "../../Services/api";
-import { TouchableOpacity } from "react-native-web";
+import { AuthContext } from '../../context/AuthContext'
 
 const Produtos = ({ navigation }) => {
   const [produtos, setProdutos] = useState([]);
+  const { logout } = useContext(AuthContext);
 
   useEffect(() => {
     api
-      .get("/produtos")
+      .get("/produto")
       .then((response) => {
         setProdutos(response.data);
       })

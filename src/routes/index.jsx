@@ -16,6 +16,7 @@ const Routes = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
+
                 {user ? (
                     <>
                         <Stack.Screen

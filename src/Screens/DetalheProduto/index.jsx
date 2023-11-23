@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import api from '../../Services/api';
+import { ActivityIndicator } from 'react-native';
 // import styles from './style';
 
 
@@ -14,18 +15,33 @@ const DetalheProduto = () => {
   const [editedEstoque, setEditedEstoque] = useState(0);
   const [editedAtivo, setEditedAtivo] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const loadData = async () =>{
+  //     await new Promise(resolve => setTimeout(resolve, 2000));
+  //     setIsLoading(false);
+  //   };
+
+  //   loadData();
+  // }, []);
   
   const [produto, setProduto] = useState ([])
   useEffect(() => {
+    setIsLoading(true);
     api.get('/produto/1')
     .then((response) => {
       setProduto(response.data);
       setEditedDescription(response.data.descricao);
       console.log(response.data);
-      
+
     }).catch(() => {
       console.log('Deu errado!');
-    })
+    }).finally(() =>  setIsLoading(false)
+      
+
+    )
+  
     
   },[]);
 
@@ -43,7 +59,8 @@ const DetalheProduto = () => {
     // Atualiza o estado local com a descrição editada
       try{
         const atualizarProduto = {
-          ...produto, 
+          ...produto,
+          descricao: editedDescription,
           imagem: editedImagem,
           nome: editedNome,
           valor: editedValor,
@@ -61,50 +78,69 @@ const DetalheProduto = () => {
   };
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
+      {isLoading && <ActivityIndicator animating={true} color='#38A69D'/>}
       <View style={styles.container}>
         <Image source={produto.imagem} style={[styles.productImage, { maxHeight: 80 }]} />
 
         <View style={styles.productDetails}>
           <Text style={styles.productTitulo}>{produto.nome}</Text>
           <Text style={styles.productPreco}>R$ {produto.valor?.toFixed(2)}</Text>
+          <Text style={styles.productEstoque}>Estoque: {produto.estoque}</Text>
+
 
           {isEditing ? (
             <View>
-              <Text>Descrição do Produto</Text>
+              <Text style={styles.descricaoEdicao}>Descrição do Produto:</Text>
             <TextInput
               style={styles.editDescriptionInput}
               value={editedDescription}
               onChangeText={(text) => setEditedDescription(text)}
               multiline
             />
-            <Text>Imagem do Produto</Text>
+            <Text style={styles.imagemEdicao}>Imagem do Produto:</Text>
             <TextInput
               style={styles.editDescriptionInput}
               value={editedImagem}
               onChangeText={(text) => setEditedImagem(text)}
             />
-            <Text>Nome do Produto</Text>
+            <Text style={styles.nomeEdicao}>Nome do Produto:</Text>
             <TextInput
               style={styles.editDescriptionInput}
               value={editedNome}
               onChangeText={(text) => setEditedNome(text)}
               
             />
-            <Text>Valor do Produto</Text>
+            <Text style={styles.valorEdicao}>Valor do Produto:</Text>
             <TextInput
               style={styles.editDescriptionInput}
               value={editedValor}
-              onChangeText={(text) => setEditedValor(text)}
+              onChangeText={(text) => {
+                const numero = parseFloat(text);
+                if(!isNaN(numero)){
+                  setEditedValor(numero);
+                }else {
+                  alert('Insira um número válido!')
+                }
+                
+              }}
               keyboardType='numeric'
             />
-            <Text>Estoque de Produto</Text>
+            <Text style={styles.estoqueEdicao}>Estoque de Produto:</Text>
             <TextInput
               style={styles.editDescriptionInput}
               value={editedEstoque}
-              onChangeText={(text) => setEditedEstoque(text)}
+              onChangeText={(text) => {
+                const numero = parseFloat(text);
+                if(!isNaN(numero)){
+                  setEditedEstoque(numero);
+                }else {
+                  alert('Insira um número válido!')
+                }
+                
+              }}
               keyboardType='numeric'
             />
-            <Text>Produto Ativo</Text>
+            <Text style={styles.ativoEdicao}>Produto Ativo:</Text>
             <TextInput
               style={styles.editDescriptionInput}
               value={editedAtivo}
@@ -143,6 +179,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 16,
+    marginTop: 20,
   },
   productImage: {
     width: 200,
@@ -164,6 +201,13 @@ const styles = StyleSheet.create({
     color: 'green',
     marginBottom: 8,
   },
+  productEstoque:{
+    fontSize: 14,
+    color: 'black',
+    marginBottom: 8,
+
+  },
+
   productDescricao: {
     fontSize: 16,
     textAlign: 'center',
@@ -172,6 +216,7 @@ const styles = StyleSheet.create({
   editDescriptionInput: {
     height: 100,
     fontSize: 16,
+    fontStyle: 'italic',
     textAlign: 'center',
     marginBottom: 16,
     borderColor: '#38A69D',
@@ -187,13 +232,64 @@ const styles = StyleSheet.create({
     backgroundColor: '#38A69D',
     padding: 10,
     borderRadius: 20,
-    marginRight: 8,
+    marginTop: 210,
+    marginLeft: 200,
   },
   saveButton: {
     backgroundColor: '#38A69D',
     padding: 10,
     borderRadius: 20,
   },
+  descricaoEdicao:{
+    fontSize: '5',
+    fontWeight: 'bold',
+    display: 'flex',
+    marginBottom: 3,
+    marginTop: 20,
+    justifyContent: 'center',
+  },
+  imagemEdicao: {
+    fontSize: '5',
+    fontWeight: 'bold',
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: 3,
+    marginTop: 20,
+   
+  },
+  nomeEdicao:{
+    fontSize: '5',
+    fontWeight: 'bold',
+    display: 'flex',
+    marginBottom: 3,
+    marginTop: 20,
+    justifyContent: 'center',
+  },
+  valorEdicao:{
+    fontSize: '5',
+    fontWeight: 'bold',
+    display: 'flex',
+    marginBottom: 3,
+    marginTop: 20,
+    justifyContent: 'center',
+  },
+  estoqueEdicao:{
+    fontSize: '5',
+    fontWeight: 'bold',
+    display: 'flex',
+    marginBottom: 3,
+    marginTop: 20,
+    justifyContent: 'center',
+  },
+  ativoEdicao:{
+    fontSize: '5',
+    fontWeight: 'bold',
+    display: 'flex',
+    marginBottom: 3,
+    marginTop: 20,
+    justifyContent: 'center',
+  },
+
 });
 
 export default DetalheProduto;

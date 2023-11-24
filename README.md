@@ -1,5 +1,6 @@
 ## Aplicativo de Gerenciamento de E-commerce em React Native
-<p>Este é um exemplo de aplicativo de gerenciamento de e-commerce desenvolvido em React Native. O aplicativo possui várias funcionalidades, 
+<p>Este é um exemplo de aplicativo de gerenciamento de e-commerce desenvolvido em React Native. Este aplicativo faz parte do trabalho 
+  final em grupo da aula de Desenvolvimento Mobile da Residencia Serratec. O aplicativo possui várias funcionalidades, 
   incluindo autenticação de usuário, navegação entre telas, exibição de produtos, detalhes do produto e gerenciamento de produtos com operações CRUD utilizando Axios para comunicação com a API.</p>
 
 

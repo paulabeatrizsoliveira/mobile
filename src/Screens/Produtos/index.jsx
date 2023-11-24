@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, Modal, TextInput, Alert, ActivityIndicator } from "react-native";
+import { useFocusEffect } from '@react-navigation/native';
 import api from "../../Services/api";
 import { AuthContext } from '../../context/AuthContext';
 import { Feather } from '@expo/vector-icons';
 import styles from "./styles";
-
 
 
 const Produtos = ({ navigation }) => {
@@ -12,7 +12,7 @@ const Produtos = ({ navigation }) => {
   const [modalVisivel, setModalVisivel] = useState(false);
   const [novoProduto, setNovoProduto] = useState({});
   const { logout } = useContext(AuthContext);
-  
+
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -31,6 +31,20 @@ const Produtos = ({ navigation }) => {
     fetchData();
   }, []);
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        try {
+          const response = await api.get("/produto");
+          setProdutos(response.data);
+        } catch (error) {
+          console.log("Erro ao buscar Produto", error);
+        }
+      };
+
+      fetchData();
+    }, [])
+  );
 
   const detalheProduto = (produtoId) => {
     navigation.navigate("DetalheProduto", { id: produtoId });
@@ -50,7 +64,12 @@ const Produtos = ({ navigation }) => {
             text: 'Confirmar',
             onPress: async () => {
               await api.put(`/produto/${produtoId}`, { ativo: false });
-              setProdutos(produtos.filter((produto) => produto.id !== produtoId));
+              setProdutos(produtos.map((produto) => {
+                if (produto.id === produtoId) {
+                  return { ...produto, ativo: false };
+                }
+                return produto;
+              }));
             },
           },
         ],
@@ -93,7 +112,7 @@ const Produtos = ({ navigation }) => {
     }
   };
 
-  
+
 
   const renderProduto = ({ item }) => (
     <View style={styles.itemContainer}>
@@ -138,7 +157,7 @@ const Produtos = ({ navigation }) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-           
+
             <TextInput
               style={styles.input}
               placeholder="Nome do Produto"

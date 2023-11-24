@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, TextInput, Modal, Alert } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import api from '../../Services/api';
 import { ActivityIndicator } from 'react-native';
-// import styles from './style';
+import styles from './style';
 
 
 const DetalheProduto = ({ route }) => {
@@ -13,6 +13,7 @@ const DetalheProduto = ({ route }) => {
   const [editedNome, setEditedNome] = useState('');
   const [editedValor, setEditedValor] = useState(0);
   const [editedEstoque, setEditedEstoque] = useState(0);
+  const [editedAtivo, setEditedAtivo] = useState(0);
 
   const [isLoading, setIsLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -46,6 +47,8 @@ const DetalheProduto = ({ route }) => {
 
   const handleSave = async () => {
     try {
+      const ativo = editedEstoque !== 0; // Determina o estado "ativo" com base no estoque inserido
+
       const atualizarProduto = {
         ...produto,
         descricao: editedDescription,
@@ -53,6 +56,7 @@ const DetalheProduto = ({ route }) => {
         nome: editedNome,
         valor: editedValor,
         estoque: editedEstoque,
+        ativo,
       };
 
       await api.put(`/produto/${produto.id}/`, atualizarProduto);
@@ -125,13 +129,15 @@ const DetalheProduto = ({ route }) => {
                 <Text style={styles.valorEdicao}>Valor do Produto:</Text>
                 <TextInput
                   style={styles.editDescriptionInput}
-                  value={editedValor.toString()}
+                  value={editedValor === 0 ? '0' : editedValor.toString()} // Garante que o zero seja exibido corretamente
                   onChangeText={(text) => {
-                    const numero = parseFloat(text);
-                    if (!isNaN(numero)) {
+                    if (text === '') {
+                      setEditedValor(0);
+                    } else if (text === '0' || !isNaN(parseFloat(text))) {
+                      const numero = parseFloat(text);
                       setEditedValor(numero);
                     } else {
-                      alert('Insira um número válido!')
+                      alert('Insira um número válido!');
                     }
                   }}
                   keyboardType='numeric'
@@ -141,13 +147,19 @@ const DetalheProduto = ({ route }) => {
                 <Text style={styles.estoqueEdicao}>Estoque de Produto:</Text>
                 <TextInput
                   style={styles.editDescriptionInput}
-                  value={editedEstoque.toString()}
+                  value={editedEstoque === 0 ? '0' : editedEstoque.toString()}
                   onChangeText={(text) => {
-                    const numero = parseFloat(text);
-                    if (!isNaN(numero)) {
+                    if (text === '') {
+                      setEditedEstoque(0);
+                      setEditedAtivo(false); // Atualiza o estado "ativo" para false se o estoque for zero
+                    } else if (text === '0' || !isNaN(parseFloat(text))) {
+                      const numero = parseFloat(text);
                       setEditedEstoque(numero);
+                      // Atualize o status "ativo" baseado no estoque inserido
+                      const ativo = numero !== 0; // Se o estoque não for zero, ativo é true
+                      setEditedAtivo(ativo); // Atualiza o estado "ativo" com base no estoque
                     } else {
-                      alert('Insira um número válido!')
+                      alert('Insira um número válido!');
                     }
                   }}
                   keyboardType='numeric'
@@ -165,176 +177,5 @@ const DetalheProduto = ({ route }) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    paddingBottom: 20,
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    padding: 16,
-    marginTop: 20,
-  },
-  productImage: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain',
-    borderRadius: 8,
-  },
-  productDetails: {
-    flex: 0.9,
-    marginTop: 16,
-    alignItems: 'center',
-  },
-  productTitulo: {
-    marginBottom: 10,
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8,
-  },
-  productPreco: {
-
-    fontSize: 18,
-    color: 'green',
-    marginVertical: 10,
-  },
-  productEstoque: {
-    fontSize: 14,
-    color: 'black',
-    marginBottom: 8,
-
-  },
-  productDescricao: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 16,
-  },
-  editDescriptionInput: {
-    height: 50,
-    fontSize: 16,
-    fontStyle: 'italic',
-    textAlign: 'center',
-    marginBottom: 10,
-    borderColor: '#38A69D',
-    borderWidth: 1,
-    borderRadius: 8,
-  },
-  botaoContainer: {
-    flex: 0.1,
-    alignItems: 'flex-end'
-  },
-  editButtonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: '100%',
-  },
-  editButton: {
-    backgroundColor: '#38A69D',
-    padding: 10,
-    borderRadius: 20,
-  },
-  saveButton: {
-    backgroundColor: '#38A69D',
-    padding: 10,
-    borderRadius: 20,
-  },
-  descricaoEdicao: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    display: 'flex',
-    marginBottom: 3,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  imagemEdicao: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    display: 'flex',
-    justifyContent: 'center',
-    marginBottom: 3,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  nomeEdicao: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    display: 'flex',
-    marginBottom: 3,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  valorEdicao: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    display: 'flex',
-    marginBottom: 3,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  estoqueEdicao: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    display: 'flex',
-    marginBottom: 3,
-    marginTop: 20,
-    textAlign: 'center',
-  },
-  editButton: {
-    backgroundColor: '#38A69D',
-    padding: 10,
-    borderRadius: 20,
-    alignSelf: 'flex-end',
-    marginTop: 10,
-  },
-
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-
-  modalContent: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    width: '90%',
-    alignItems: 'center',
-  },
-
-  modalTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-
-  editDescriptionInput: {
-    height: 60,
-    fontSize: 16,
-    fontStyle: 'italic',
-    textAlign: 'center',
-    marginBottom: 16,
-    borderColor: '#38A69D',
-    borderWidth: 1,
-    borderRadius: 8,
-    width: '100%',
-    paddingHorizontal: 10,
-  },
-
-  saveButton: {
-    backgroundColor: '#38A69D',
-    padding: 10,
-    borderRadius: 20,
-    marginTop: 20,
-  },
-
-  saveButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 18,
-  },
-});
 
 export default DetalheProduto;

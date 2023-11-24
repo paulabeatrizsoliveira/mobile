@@ -108,6 +108,18 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 8,
   },
+  itemButton: {
+    backgroundColor: '#f0f0f0',
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  itemButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'black',
+  },
 });
 
 export default styles;

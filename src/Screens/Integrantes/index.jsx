@@ -6,27 +6,27 @@ const equipe = [
   {
     name: 'Patrícia',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    imageUrl: 'https://via.placeholder.com/150',
+    imageUrl: 'https://avatars.githubusercontent.com/u/99268893?v=4',
   },
   {
     name: 'Paula',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
+    imageUrl: 'https://avatars.githubusercontent.com/u/142060967?v=4',
+  },  
   {
-    name: 'Roger',
+    name: 'Róger',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    imageUrl: 'https://via.placeholder.com/150',
+    imageUrl: 'https://avatars.githubusercontent.com/u/141455473?v=4',
   },
   {
     name: 'Victor',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    imageUrl: 'https://via.placeholder.com/150',
+    imageUrl: 'https://avatars.githubusercontent.com/u/142061047?v=4',
   },
   {
     name: 'Yslanio',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    imageUrl: 'https://via.placeholder.com/150',
+    imageUrl: 'https://media-gig4-1.cdn.whatsapp.net/v/t61.24694-24/383479774_1386027178676357_6783184291419737998_n.jpg?ccb=11-4&oh=01_AdRKCdoCWdtt94gjMhxioEd5oTqjSrsLt3QS5iV_glp8TA&oe=656CC812&_nc_sid=e6ed6c&_nc_cat=105',
   },
 ];
 

@@ -11,7 +11,7 @@
 
 ## Navegação:
 
-- O aplicativo utiliza pelo menos dois tipos de navegação, como Stack Navigation e Drawer Navigation, para proporcionar uma experiência de usuário fluida.
+- O aplicativo utiliza pelo menos dois tipos de navegação, como Stack Navigation e Tabs Navigation, para proporcionar uma experiência de usuário fluida.
 - Exibição de Produtos:
 
 - Utiliza FlatList para exibir a lista de produtos.
@@ -43,17 +43,14 @@
 ## Configuração do Projeto
 
 ## 1. Clone o repositório:
-- git clone https://github.com/seu-usuario/nome-do-repositorio.git
+- git clone https://github.com/paulabeatrizsoliveira/mobile.git
 
 ## 2. Instale as dependências:
-
 - cd nome-do-repositorio
 - npm install
 
 ## Inicie o aplicativo:
-- npx react-native run-android
- ou
-- npx react-native run-ios
+- npx expo start
 
 ## Estrutura do Projeto:
 - src/components: Contém os componentes reutilizáveis do aplicativo.
@@ -63,9 +60,11 @@
 ## Dependências Principais:
 - @react-navigation/native: Biblioteca para navegação em React Native.
 - axios: Cliente HTTP para fazer requisições à API.
-- react-native-elements: Componentes UI para React Native.
+- react-native-screens react-native-safe-area-context
+- @react-navigation/native-stack
+- @react-navigation/bottom-tabs
 
-Ferramentas e tecnologias:
+## Ferramentas e tecnologias:
 - [NPM](https://www.npmjs.com/) <img loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" width="40" height="40"/>
 - [GitHub](https://github.com/) <img loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30" height="30"/>
 - [Git](https://git-scm.com/) <img loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="30" height="30"/>

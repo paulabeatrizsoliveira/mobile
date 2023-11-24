@@ -1,18 +1,23 @@
-import React from 'react';
-import { StatusBar } from 'react-native';
+import AuthProvider from './src/context/AuthContext';
+import Routes from './src/routes';
 
 
-import { NavigationContainer } from '@react-navigation/native';
-import Routes from './src/routes'
-
-
-export default function App() {
+export default function App({ children }) {
   return (
+<<<<<<< HEAD
 
     <NavigationContainer>
       <StatusBar backgroundColor="#38A69D" barStyle="light-content" />
       <Routes/>
     </NavigationContainer>
   );
+=======
+    <AuthProvider>
+      <Routes />   
+    </AuthProvider>    
+  )
+>>>>>>> main
 }
+
+  /* tag 7.2.1 */
 

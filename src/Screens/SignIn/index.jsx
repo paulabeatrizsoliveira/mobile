@@ -4,8 +4,6 @@ import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../../context/AuthContext';
 import styles from './styles';
 
-// import React, { Component } from 'react'
-
 export default function SignIn() {
 
     const { login } = useContext(AuthContext);

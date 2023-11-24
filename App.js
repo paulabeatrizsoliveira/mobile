@@ -3,16 +3,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import AuthProvider from './src/context/AuthContext'
 import Routes from './src/routes'
 
-import { Carousel } from './src/components/Carousel'
+// import { Carousel } from './src/components/Carousel'
 
 export default function App({ children }) {
   return (
     <AuthProvider>
       <Routes />
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <StatusBar style="auto" />
         <Carousel />
-      </View>
+      </View> */}
     </AuthProvider>    
   )
 }

@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Modal, TextInput, Alert, ActivityIndicator } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Modal, TextInput, Alert, ActivityIndicator } from "react-native";
 import api from "../../Services/api";
 import { AuthContext } from '../../context/AuthContext';
 import { Feather } from '@expo/vector-icons';
+import styles from "./styles";
+
 
 const Produtos = ({ navigation }) => {
   const [produtos, setProdutos] = useState([]);
   const [modalVisivel, setModalVisivel] = useState(false);
   const [novoProduto, setNovoProduto] = useState({});
   const { logout } = useContext(AuthContext);
+  
 
   const [isLoading, setIsLoading] = useState(true);
 
@@ -86,6 +89,8 @@ const Produtos = ({ navigation }) => {
     }
   };
 
+  
+
   const renderProduto = ({ item }) => (
     <View style={styles.itemContainer}>
       <TouchableOpacity onPress={() => detalheProduto(item.id)} style={styles.item}>
@@ -105,8 +110,8 @@ const Produtos = ({ navigation }) => {
       <View style={styles.flatListContainer}>
         <Text style={styles.titulo}>Produtos</Text>
         <FlatList
-          data={produtos.filter((produto) => produto.ativo)}
-          renderItem={renderProduto} // Usar a função renderProduto aqui
+          data={produtos.filter((produto) => produto.ativo && produto.estoque !== 0)}
+          renderItem={renderProduto}
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
         />
@@ -129,7 +134,7 @@ const Produtos = ({ navigation }) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            {/* Componentes para adicionar um novo produto */}
+           
             <TextInput
               style={styles.input}
               placeholder="Nome do Produto"
@@ -179,115 +184,5 @@ const Produtos = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    backgroundColor: '#38A69D',
-  },
-  flatListContainer: {
-    flex: 0.95,
-    marginHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  titulo: {
-    fontSize: 24,
-    color: '#fff',
-    fontWeight: "bold",
-    marginVertical: 20,
-    textAlign: 'center',
-  },
-  list: {
-    width: "100%",
-  },
-  item: {
-    padding: 10,
-    backgroundColor: "#F5F5F5",
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  itemText: {
-    fontSize: 20,
-  },
-  itemContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    backgroundColor: "#F5F5F5",
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  deleteContainer: {
-    backgroundColor: "white",
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
-    padding: 5,
-  },
-  deleteButton: {
-    backgroundColor: "red",
-    padding: 8,
-    borderRadius: 5,
-  },
-  deleteButtonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-  botaoContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  button: {
-    height: 40,
-    borderColor: '#fff',
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-  },
-  buttonText: {
-    fontSize: 25,
-    color: "#fff",
-  },
-  buttonAdicionar: {
-    height: 40,
-    borderColor: '#fff',
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20,
-    backgroundColor: 'green',
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    width: '90%',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 8,
-    marginBottom: 10,
-    width: '100%',
-  },
-  buttonAdicionar: {
-    height: 40,
-    width: 150,
-    backgroundColor: '#38A69D',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 20,
-    borderRadius: 8,
-  },
-});
 
 export default Produtos;

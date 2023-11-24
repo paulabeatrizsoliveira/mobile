@@ -68,6 +68,8 @@ Ferramentas e tecnologias:
 - [NPM](https://www.npmjs.com/) <img loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/npm/npm-original-wordmark.svg" width="40" height="40"/>
 - [GitHub](https://github.com/) <img loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="30" height="30"/>
 - [Git](https://git-scm.com/) <img loading="lazy" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="30" height="30"/>
+- ![Expo](https://img.shields.io/badge/Expo-42.0.1-lightgrey?logo=expo)
+- ![Expo Vector Icons](https://img.shields.io/badge/Expo%20Vector%20Icons-12.0.0-yellow?logo=expo)
 
 ## Colaboradores
 - [RÓGER DO ESPÍRITO SANTO FERREIRA](https://github.com/ferreirarogeer)

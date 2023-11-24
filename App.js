@@ -27,5 +27,5 @@ const styles = StyleSheet.create({
 })
 
 {
-  /* tag 6.0.0 */
+  /* tag 6.1.0 */
 }

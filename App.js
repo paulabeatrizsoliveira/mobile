@@ -9,11 +9,11 @@ export default function App({ children }) {
   return (
     <AuthProvider>
       <Routes />
-      <View style={styles.container}>
+      {/* <View style={styles.container}>
         <StatusBar style="auto" />
         <Carousel />
-      </View>
-    </AuthProvider>    
+      </View> */}
+    </AuthProvider>
   )
 }
 

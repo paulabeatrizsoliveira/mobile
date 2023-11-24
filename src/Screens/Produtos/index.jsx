@@ -3,6 +3,9 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, Modal, TextInput, A
 import api from "../../Services/api";
 import { AuthContext } from '../../context/AuthContext';
 import { Feather } from '@expo/vector-icons';
+import Stack from "../../routes/stack";
+import Tabs from "../../routes/tabs";
+
 
 const Produtos = ({ navigation }) => {
   const [produtos, setProdutos] = useState([]);

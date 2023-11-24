@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Produtos from "../Screens/Produtos";
 import { Feather } from "@expo/vector-icons";
 import Stack from "./stack";
+import Integrantes from "../Screens/Integrantes";
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -11,7 +12,7 @@ const Tabs = () => {
     <Navigator>
       <Screen
         name="Produtos"
-        component={Stack}
+        component={Produtos}
         options={{
           tabBarLabel: "Produtos",
           tabBarIcon: ({ color, size }) => (
@@ -32,3 +33,5 @@ const Tabs = () => {
     </Navigator>
   );
 };
+
+export default Tabs;

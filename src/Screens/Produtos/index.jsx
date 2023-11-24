@@ -97,14 +97,37 @@ const Produtos = ({ navigation }) => {
 
   const reativarProduto = async (produtoId) => {
     try {
-     const produtoReativado = produtosInativos.find((produto) => produto.id === produtoId);
-     await api.put(`/produto/${produtoId}`, { ativo: true, estoque: 1 });
-     setProdutosInativos(produtosInativos.filter((produto) => produto.id !== produtoId));
-     setProdutos([...produtos, produtoReativado]);
-    } catch (e) {
-     console.log('Erro ao reativar produto', e);
+      const produtoReativado = produtosInativos.find((produto) => produto.id === produtoId);
+
+      Alert.alert(
+        'Confirmar reativação',
+        'Tem certeza que deseja reativar este produto?',
+        [
+          {
+            text: 'Cancelar',
+            style: 'cancel',
+          },
+          {
+            text: 'Confirmar',
+            onPress: async () => {
+              try {
+                await api.put(`/produto/${produtoId}`, { ativo: true, estoque: 1 });
+                setProdutosInativos(produtosInativos.filter((produto) => produto.id !== produtoId));
+                setProdutos([...produtos, produtoReativado]);
+                Alert.alert('Produto reativado com sucesso!');
+              } catch (error) {
+                console.log('Erro ao reativar produto:', error);
+                Alert.alert('Erro ao reativar produto. Tente novamente.');
+              }
+            },
+          },
+        ],
+        { cancelable: false }
+      );
+    } catch (error) {
+      console.log('Erro ao reativar produto', error);
     }
-   };
+  };
 
   const renderProduto = ({ item }) => (
     <View style={styles.itemContainer}>

@@ -17,17 +17,20 @@ const Produtos = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .get("/produto")
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get("/produto");
         setProdutos(response.data);
+      } catch (error) {
+        console.log("Erro ao buscar Produto", error);
+      } finally {
         setIsLoading(false);
-      })
-      .catch((e) => {
-        console.log("Erro ao buscar Produto", e);
-        setIsLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
+
 
   const detalheProduto = (produtoId) => {
     navigation.navigate("DetalheProduto", { id: produtoId });
@@ -107,7 +110,7 @@ const Produtos = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {isLoading && <ActivityIndicator animating={true} color='#38A69D' />}
+      {isLoading && <ActivityIndicator animating={true} color='#fff' />}
       <View style={styles.flatListContainer}>
         <Text style={styles.titulo}>Produtos</Text>
         <FlatList

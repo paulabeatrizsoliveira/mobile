@@ -6,113 +6,34 @@ import { AuthContext } from '../context/AuthContext';
 import Tabs from './tabs';
 import Stack from './stack';
 
-
-
-const  StackNavigator = createNativeStackNavigator();
+const StackNavigator = createNativeStackNavigator();
 const TabsNavigator = createBottomTabNavigator();
 
-
 const Routes = () => {
-
     const { user } = useContext(AuthContext);
 
     return (
         <NavigationContainer>
-            {user?(
+            {user ? (
                 <TabsNavigator.Navigator>
-                    <TabsNavigator.Screen name='Tabs' component={Tabs}/>
+                    <TabsNavigator.Screen
+                    name='Tabs'
+                    component={Tabs}
+                    />
                 </TabsNavigator.Navigator>
-
             ) : (
-                
                 <StackNavigator.Navigator>
-                <StackNavigator.Screen name='Stack' component={Stack}/>
-            </StackNavigator.Navigator>
-
+                    <StackNavigator.Screen
+                    name='Stack'
+                    component={Stack}
+                    options={{
+                        headerShown: false
+                    }}
+                    />
+                </StackNavigator.Navigator>
             )}
-            
-             {/* <Stack.Navigator>
-
-                
-                <Stack.Screen
-                    name='Produtos'
-                    component={Produtos}
-                    options={{
-                        headerShown: false,
-                    }}
-                />
-
-                <Stack.Screen
-                    name='DetalheProduto'
-                    component={DetalheProduto}
-                    options={{
-                        title: '',
-                        headerStyle: {
-                            backgroundColor: '#38A69D',
-                        },
-                        headerTintColor: '#fff',
-                        headerBackTitleVisible: false,
-                        headerShadowVisible: false,
-
-                    }}
-                /> */}
-
-                {/* {user ? (
-                    <>
-                        <Stack.Screen
-                            name='Produtos'
-                            component={Produtos}
-                            options={{
-                                headerShown: false,
-                            }}
-                        />
-                        <Stack.Screen
-                            name='DetalheProduto'
-                            component={DetalheProduto}
-                            options={{
-                                title: '',
-                                headerStyle: {
-                                    backgroundColor: '#38A69D',
-                                },
-                                headerTintColor: '#fff',
-                                headerBackTitleVisible: false,
-                                headerShadowVisible: false,
-
-                            }}
-                        />
-
-                    </>
-                ) : (
-                    <>
-                        <Stack.Screen
-                            name='Welcome'
-                            component={Welcome}
-                            options={{
-                                headerShown: false
-                            }}
-                        />
-                        
-                        <Stack.Screen
-                            name="SignIn"
-                            component={SignIn}
-                            options={{
-                                title: '',
-                                headerStyle: {
-                                    backgroundColor: '#38A69D',
-                                },
-                                headerTintColor: '#fff',
-                                headerBackTitleVisible: false,
-                                headerShadowVisible: false,
-                            }}
-                        />
-                    </>
-                )
-
-                } */}
-
-            {/* </Stack.Navigator> */}
-        </NavigationContainer >
-    )
-}
+        </NavigationContainer>
+    );
+};
 
 export default Routes;

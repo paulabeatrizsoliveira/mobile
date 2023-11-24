@@ -10,5 +10,5 @@ export default function App({ children }) {
   )
 }
 
-  /* tag 6.1.2 */
+  /* tag 6.2.0 */
 

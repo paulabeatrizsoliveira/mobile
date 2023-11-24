@@ -53,6 +53,13 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
+
+  reativarButton:{
+    backgroundColor: "#00d2ff",
+    padding: 8,
+    borderRadius: 5,
+    marginRight: 6,
+  },
   botaoContainer: {
     alignItems: 'center',
     justifyContent: 'center',

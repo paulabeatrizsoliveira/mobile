@@ -6,7 +6,8 @@ import { ActivityIndicator } from 'react-native';
 import styles from './style';
 
 
-const DetalheProduto = ({ route }) => {
+const DetalheProduto = ({ route, navigation }) => {
+  
   const [isEditing, setIsEditing] = useState(false);
   const [editedDescription, setEditedDescription] = useState('');
   const [editedImagem, setEditedImagem] = useState('');
@@ -61,6 +62,7 @@ const DetalheProduto = ({ route }) => {
 
       await api.put(`/produto/${produto.id}/`, atualizarProduto);
       setProduto(atualizarProduto);
+      setProdutos(produtos.map(p => p.id === produto.id ? atualizarProduto : p));
       setIsEditing(false);
       setIsModalVisible(false);
       Alert.alert('Sucesso', 'Produto atualizado com sucesso!');

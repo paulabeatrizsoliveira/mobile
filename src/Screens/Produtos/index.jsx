@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity, Modal, TextInput, Alert, ActivityIndicator } from "react-native";
-import { useFocusEffect } from '@react-navigation/native';
 import api from "../../Services/api";
 import { AuthContext } from '../../context/AuthContext';
 import { Feather } from '@expo/vector-icons';
 import styles from "./styles";
 
 
+
 const Produtos = ({ navigation }) => {
   const [produtos, setProdutos] = useState([]);
+  const [produtosInativos, setProdutosInativos] = useState([]);
   const [modalVisivel, setModalVisivel] = useState(false);
   const [novoProduto, setNovoProduto] = useState({});
   const { logout } = useContext(AuthContext);
@@ -20,7 +21,8 @@ const Produtos = ({ navigation }) => {
     const fetchData = async () => {
       try {
         const response = await api.get("/produto");
-        setProdutos(response.data);
+        setProdutos(response.data.filter(produto => produto.ativo));
+        setProdutosInativos(response.data.filter(produto => !produto.ativo));
       } catch (error) {
         console.log("Erro ao buscar Produto", error);
       } finally {
@@ -31,21 +33,6 @@ const Produtos = ({ navigation }) => {
     fetchData();
   }, []);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const fetchData = async () => {
-        try {
-          const response = await api.get("/produto");
-          setProdutos(response.data);
-        } catch (error) {
-          console.log("Erro ao buscar Produto", error);
-        }
-      };
-
-      fetchData();
-    }, [])
-  );
-
   const detalheProduto = (produtoId) => {
     navigation.navigate("DetalheProduto", { id: produtoId });
   };
@@ -54,7 +41,7 @@ const Produtos = ({ navigation }) => {
     try {
       Alert.alert(
         'Confirmar exclusão',
-        'Tem certeza que deseja excluir este produto?',
+        'Tem certeza que deseja desativar este produto?',
         [
           {
             text: 'Cancelar',
@@ -64,19 +51,15 @@ const Produtos = ({ navigation }) => {
             text: 'Confirmar',
             onPress: async () => {
               await api.put(`/produto/${produtoId}`, { ativo: false });
-              setProdutos(produtos.map((produto) => {
-                if (produto.id === produtoId) {
-                  return { ...produto, ativo: false };
-                }
-                return produto;
-              }));
+              setProdutos(produtos.filter((produto) => produto.id !== produtoId));
+              setProdutosInativos([...produtosInativos, produtos.find((produto) => produto.id === produtoId)]);
             },
           },
         ],
         { cancelable: false }
       );
     } catch (e) {
-      console.log('Erro ao deletar produto', e);
+      console.log('Erro ao desativar produto', e);
     }
   };
 
@@ -112,7 +95,16 @@ const Produtos = ({ navigation }) => {
     }
   };
 
-
+  const reativarProduto = async (produtoId) => {
+    try {
+     const produtoReativado = produtosInativos.find((produto) => produto.id === produtoId);
+     await api.put(`/produto/${produtoId}`, { ativo: true, estoque: 1 });
+     setProdutosInativos(produtosInativos.filter((produto) => produto.id !== produtoId));
+     setProdutos([...produtos, produtoReativado]);
+    } catch (e) {
+     console.log('Erro ao reativar produto', e);
+    }
+   };
 
   const renderProduto = ({ item }) => (
     <View style={styles.itemContainer}>
@@ -135,6 +127,24 @@ const Produtos = ({ navigation }) => {
         <FlatList
           data={produtos.filter((produto) => produto.ativo && produto.estoque !== 0)}
           renderItem={renderProduto}
+          keyExtractor={(item) => item.id.toString()}
+          style={styles.list}
+        />
+        {produtosInativos.length > 0 && <Text style={styles.titulo}>Produtos Inativos</Text>}
+        <FlatList
+          data={produtosInativos}
+          renderItem={({ item }) => (
+            <View style={styles.itemContainer}>
+              <TouchableOpacity onPress={() => detalheProduto(item.id)} style={styles.item}>
+                <Text style={styles.itemText}>{item.nome}</Text>
+              </TouchableOpacity>
+              <View style={styles.reativarContainer}>
+                <TouchableOpacity onPress={() => reativarProduto(item.id)} style={styles.reativarButton}>
+                  <Feather name="refresh-ccw" size={24} color="white" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
         />

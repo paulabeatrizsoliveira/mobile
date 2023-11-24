@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
@@ -12,15 +12,14 @@ export default function Welcome() {
     <View style={styles.container}>
 
       <View style={styles.containerLogo}>
-        <Animatable.Image
-          animation="flipInY"
+        <Image
           source={require('../../../assets/Logo/logo.png')}
           style={{ width: '100%' }}
           resizeMode='contain'
         />
       </View>
 
-      <Animatable.View delay={600} animation="fadeInUp" style={styles.containerForm}>
+      <Animatable.View delay={500} animation="fadeInUp" style={styles.containerForm}>
         <Text style={styles.title}>O Melhor Gerenciador de Ecommerce do Mundo</Text>
         <Text style={styles.text}>Faça o login para começar</Text>
 

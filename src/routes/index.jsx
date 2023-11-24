@@ -47,6 +47,11 @@ const Routes = () => {
                         name='Integrantes'
                         component={Integrantes}
                         options={{
+                            title: '',
+                            headerStyle: {
+                                backgroundColor: '#38A69D',
+                            },
+                            headerShadowVisible: false,
                             tabBarLabel: "Integrantes",
                             tabBarActiveTintColor: '#38A69D',
                             tabBarInactiveTintColor: '#c1c1c1',

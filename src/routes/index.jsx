@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Welcome from '../Screens/Welcome';
-import SignIn from '../Screens/SignIn';
-import DetalheProduto from '../Screens/DetalheProduto';
-import Produtos from '../Screens/Produtos';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AuthContext } from '../context/AuthContext';
+import Tabs from './tabs';
+import Stack from './stack';
 
 
 
-const Stack = createNativeStackNavigator();
+const  StackNavigator = createNativeStackNavigator();
+const TabsNavigator = createBottomTabNavigator();
+
 
 const Routes = () => {
 
@@ -17,9 +18,22 @@ const Routes = () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator>
+            {user?(
+                <TabsNavigator.Navigator>
+                    <TabsNavigator.Screen name='Tabs' component={Tabs}/>
+                </TabsNavigator.Navigator>
 
+            ) : (
+                
+                <StackNavigator.Navigator>
+                <StackNavigator.Screen name='Stack' component={Stack}/>
+            </StackNavigator.Navigator>
 
+            )}
+            
+             {/* <Stack.Navigator>
+
+                
                 <Stack.Screen
                     name='Produtos'
                     component={Produtos}
@@ -41,7 +55,7 @@ const Routes = () => {
                         headerShadowVisible: false,
 
                     }}
-                />
+                /> */}
 
                 {/* {user ? (
                     <>
@@ -96,7 +110,7 @@ const Routes = () => {
 
                 } */}
 
-            </Stack.Navigator>
+            {/* </Stack.Navigator> */}
         </NavigationContainer >
     )
 }

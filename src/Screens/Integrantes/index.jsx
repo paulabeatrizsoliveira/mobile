@@ -9,4 +9,4 @@ const Integrantes = () => {
   )
 }
 
-export default Integrantes
+export default Integrantes;

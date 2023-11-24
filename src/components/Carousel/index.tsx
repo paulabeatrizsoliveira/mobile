@@ -54,73 +54,73 @@
 //     return () => clearTimeout(timeId);
 //   }, [activeBanner]);
 
-//   return (
-//     <View style={{ alignItems: 'center' }}>
-//       <FlatList
-//         ref={FlatlistRef}
-//         data={DATA}
-//         renderItem={({ item, index }) => (
-//           <View
-//             style={{
-//               width: Dimensions.get('screen').width * 0.8,
-//               alignItems: 'center',
-//               height: 180,
-//               borderRadius: 30,
-//               marginHorizontal: 40,
-//             }}
-//           >
-//             <Image
-//               source={{
-//                 uri: item.image,
-//               }}
-//               style={{
-//                 width: '100%',
-//                 height: '100%',
-//                 alignSelf: 'center',
-//                 borderRadius: 30,
-//               }}
-//               resizeMode='contain'
-//             />
-//           </View>
-//         )}
-//         style={{
-//           paddingTop: 20,
-//           height: 1,
-//         }}
-//         contentContainerStyle={{
-//           marginLeft: -13,
-//         }}
-//         pagingEnabled
-//         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
-//         horizontal
-//         keyExtractor={(item, index) => String(index)}
-//         showsHorizontalScrollIndicator={false}
-//       />
-//       <FlatList
-//         data={DATA}
-//         renderItem={({ item, index }) => (
-//           <Animated.View
-//             layout={Layout}
-//             entering={FadeInLeft}
-//             exiting={FadeOutRight}
-//             style={{
-//               width: activeBanner === index ? 12 : 8,
-//               height: 8,
-//               borderRadius: 4,
-//               backgroundColor: activeBanner === index ? 'black' : 'gray',
-//               marginHorizontal: 2,
-//             }}
-//           />
-//         )}
-//         style={{
-//           paddingTop: 20,
-//           alignSelf: 'center',
-//           bottom: 100,
-//         }}
-//         scrollEnabled={false}
-//         horizontal
-//         keyExtractor={(item, index) => String(index)}
-//       />
-//     </View>
-//   );
-// };
+  return (
+    <View style={{ alignItems: 'center' }}>
+      <FlatList
+        ref={FlatlistRef}
+        data={DATA}
+        renderItem={({ item, index }) => (
+          <View
+            style={{
+              width: Dimensions.get('screen').width * 0.8,
+              alignItems: 'center',
+              height: 180,
+              borderRadius: 30,
+              marginHorizontal: 40,
+            }}
+          >
+            <Image
+              source={{
+                uri: item.image,
+              }}
+              style={{
+                width: '100%',
+                height: '100%',
+                alignSelf: 'center',
+                borderRadius: 30,
+              }}
+              resizeMode='contain'
+            />
+          </View>
+        )}
+        style={{
+          paddingTop: 20,
+          height: 1,
+        }}
+        contentContainerStyle={{
+          marginLeft: -13,
+        }}
+        pagingEnabled
+        viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
+        horizontal
+        keyExtractor={(item, index) => String(index)}
+        showsHorizontalScrollIndicator={false}
+      />
+      <FlatList
+        data={DATA}
+        renderItem={({ item, index }) => (
+          <Animated.View
+            layout={Layout}
+            entering={FadeInLeft}
+            exiting={FadeOutRight}
+            style={{
+              width: activeBanner === index ? 12 : 8,
+              height: 8,
+              borderRadius: 4,
+              backgroundColor: activeBanner === index ? 'black' : 'gray',
+              marginHorizontal: 2,
+            }}
+          />
+        )}
+        style={{
+          paddingTop: 20,
+          alignSelf: 'center',
+          bottom: 100,
+        }}
+        scrollEnabled={false}
+        horizontal
+        keyExtractor={(item, index) => String(index)}
+      />
+    </View>
+  );
+};

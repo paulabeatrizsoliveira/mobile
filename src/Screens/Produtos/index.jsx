@@ -5,6 +5,9 @@ import { AuthContext } from '../../context/AuthContext';
 import { Feather } from '@expo/vector-icons';
 import styles from "./styles";
 
+import Stack from "../../routes/stack";
+import Tabs from "../../routes/tabs";
+
 
 const Produtos = ({ navigation }) => {
   const [produtos, setProdutos] = useState([]);
